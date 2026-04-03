@@ -19,9 +19,10 @@ trainer:
   accelerator: gpu
   precision: bf16
   gradient_clip_val: 1.0
+  accumulate_grad_batches: 4  # effective batch size = 32 * 4 = 128
 
 loader:
-  batch_size: 128
+  batch_size: 32
   num_workers: ${num_workers}
   persistent_workers: True
   prefetch_factor: 3
