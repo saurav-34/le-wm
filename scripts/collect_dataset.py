@@ -250,7 +250,7 @@ def main():
         except ImportError:
             raise ImportError("MiniGrid not found. Run: pip install minigrid")
 
-    out_dir  = Path(args.out_dir) if args.out_dir else Path(os.environ.get("STABLEWM_HOME", Path.home() / ".stable-wm"))
+    out_dir  = Path(args.out_dir) if args.out_dir else Path(os.environ.get("STABLEWM_HOME", Path.home() / ".stable_worldmodel"))
     out_name = args.out_name or args.env.lower().replace("-", "_").replace("/", "_")
     out_path = out_dir / f"{out_name}.h5"
 

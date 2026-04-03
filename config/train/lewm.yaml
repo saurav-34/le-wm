@@ -5,7 +5,7 @@ defaults:
 output_model_name: lewm
 subdir: ${hydra:job.id}
 
-num_workers: 6
+num_workers: 2
 train_split: 0.9
 seed: 3072
 img_size: 224
@@ -19,10 +19,10 @@ trainer:
   accelerator: gpu
   precision: bf16
   gradient_clip_val: 1.0
-  accumulate_grad_batches: 4  # effective batch size = 32 * 4 = 128
+  accumulate_grad_batches: 8  # effective batch size = 16 * 8 = 128
 
 loader:
-  batch_size: 32
+  batch_size: 16
   num_workers: ${num_workers}
   persistent_workers: True
   prefetch_factor: 3
@@ -36,7 +36,7 @@ optimizer:
 wandb:
   enabled: True
   config:
-    entity: lewm
+    entity: ssaurav3425-iiser-bhopal
     project: lewm
     name: ${output_model_name}
     id: ${subdir}
