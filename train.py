@@ -12,7 +12,7 @@ from omegaconf import OmegaConf, open_dict
 
 from jepa import JEPA
 from module import ARPredictor, Embedder, MLP, SIGReg
-from utils import get_column_normalizer, get_img_preprocessor, ModelObjectCallBack
+from utils import get_column_normalizer, get_img_preprocessor, ModelObjectCallBack, WandbPredictionVizCallback
 
 
 def lejepa_forward(self, batch, stage, cfg):
@@ -160,9 +160,21 @@ def run(cfg):
         dirpath=run_dir, filename=cfg.output_model_name, epoch_interval=1,
     )
 
+    callbacks = [object_dump_callback]
+    if cfg.wandb.enabled:
+        viz_callback = WandbPredictionVizCallback(
+            val_loader=val,
+            full_dataset=val_set,
+            ctx_len=cfg.wm.history_size,
+            num_sequences=4,
+            epoch_interval=5,
+            fps=4,
+        )
+        callbacks.append(viz_callback)
+
     trainer = pl.Trainer(
         **cfg.trainer,
-        callbacks=[object_dump_callback],
+        callbacks=callbacks,
         num_sanity_val_steps=1,
         logger=logger,
         enable_checkpointing=True,
