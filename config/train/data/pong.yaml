@@ -2,6 +2,7 @@ dataset:
   num_steps: ${eval:'${wm.num_preds} + ${wm.history_size}'}
   frameskip: 4
   name: pong_random
+  cache_dir: /home/saurav/.stable_worldmodel
   keys_to_load:
     - pixels
     - action
