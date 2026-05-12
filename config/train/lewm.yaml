@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - data: pusht
+  - data: pong
 
 output_model_name: lewm
 subdir: ${hydra:job.id}
